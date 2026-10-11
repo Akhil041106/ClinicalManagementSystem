@@ -37,6 +37,12 @@ public class Appointment {
     @Column(name = "payment_status", length = 20, nullable = false)
     private String paymentStatus; // PENDING, PAID
 
+    @Column(name = "payment_method", length = 30)
+    private String paymentMethod; // UPI, CASH, NET_BANKING
+
+    @Column(name = "transaction_reference", length = 100)
+    private String transactionReference;
+
     @Column(name = "fee_amount", precision = 10, scale = 2)
     private BigDecimal feeAmount;
 
@@ -125,6 +131,22 @@ public class Appointment {
 
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getTransactionReference() {
+        return transactionReference;
+    }
+
+    public void setTransactionReference(String transactionReference) {
+        this.transactionReference = transactionReference;
     }
 
     public BigDecimal getFeeAmount() {

@@ -134,10 +134,12 @@ public class PatientController {
 
     @PostMapping("/testreport/{id}/pay")
     public String payTestReport(@PathVariable("id") Long reportId,
+                                @RequestParam(value = "paymentMethod", defaultValue = "UPI") String paymentMethod,
+                                @RequestParam(value = "transactionReference", required = false) String transactionReference,
                                 RedirectAttributes redirectAttributes) {
         try {
-            testReportService.updatePaymentStatus(reportId, "PAID");
-            redirectAttributes.addFlashAttribute("successMessage", "Diagnostic test fee for Report #" + reportId + " marked as PAID successfully!");
+            testReportService.updatePaymentStatus(reportId, "PAID", paymentMethod, transactionReference);
+            redirectAttributes.addFlashAttribute("successMessage", "Diagnostic test fee for Report #" + reportId + " marked as PAID via " + paymentMethod + " successfully!");
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to process payment: " + ex.getMessage());
         }

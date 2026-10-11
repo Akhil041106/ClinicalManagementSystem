@@ -264,9 +264,19 @@ public class Services {
         }
 
         public Appointment updatePaymentStatus(Long appointmentId, String paymentStatus) {
+            return updatePaymentStatus(appointmentId, paymentStatus, null, null);
+        }
+
+        public Appointment updatePaymentStatus(Long appointmentId, String paymentStatus, String paymentMethod, String transactionReference) {
             Appointment appointment = appointmentRepository.findById(appointmentId)
                     .orElseThrow(() -> new IllegalArgumentException("Appointment not found: " + appointmentId));
             appointment.setPaymentStatus(paymentStatus.toUpperCase());
+            if (paymentMethod != null && !paymentMethod.trim().isEmpty()) {
+                appointment.setPaymentMethod(paymentMethod.toUpperCase());
+            }
+            if (transactionReference != null && !transactionReference.trim().isEmpty()) {
+                appointment.setTransactionReference(transactionReference.trim());
+            }
             return appointmentRepository.save(appointment);
         }
 
@@ -382,9 +392,19 @@ public class Services {
         }
 
         public TestReport updatePaymentStatus(Long id, String paymentStatus) {
+            return updatePaymentStatus(id, paymentStatus, null, null);
+        }
+
+        public TestReport updatePaymentStatus(Long id, String paymentStatus, String paymentMethod, String transactionReference) {
             TestReport report = testReportRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Test report not found: " + id));
             report.setPaymentStatus(paymentStatus.toUpperCase());
+            if (paymentMethod != null && !paymentMethod.trim().isEmpty()) {
+                report.setPaymentMethod(paymentMethod.toUpperCase());
+            }
+            if (transactionReference != null && !transactionReference.trim().isEmpty()) {
+                report.setTransactionReference(transactionReference.trim());
+            }
             return testReportRepository.save(report);
         }
 

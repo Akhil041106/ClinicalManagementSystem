@@ -51,6 +51,12 @@ public class TestReport {
     @Column(name = "payment_status", length = 20, nullable = false)
     private String paymentStatus; // PAID, PENDING
 
+    @Column(name = "payment_method", length = 30)
+    private String paymentMethod; // UPI, CASH, NET_BANKING
+
+    @Column(name = "transaction_reference", length = 100)
+    private String transactionReference;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -180,6 +186,22 @@ public class TestReport {
 
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getTransactionReference() {
+        return transactionReference;
+    }
+
+    public void setTransactionReference(String transactionReference) {
+        this.transactionReference = transactionReference;
     }
 
     public LocalDateTime getCreatedAt() {

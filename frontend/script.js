@@ -147,3 +147,65 @@ function printPrescription() {
 function confirmAction(message) {
     return confirm(message || 'Are you sure you want to proceed?');
 }
+
+// Payment Gateway Modal Controller
+function openPaymentModal(itemType, id, title, amount, postActionUrl) {
+    const modal = document.getElementById('paymentModal');
+    if (!modal) return;
+
+    // Set form target action
+    const form = document.getElementById('paymentGatewayForm');
+    if (form) form.action = postActionUrl;
+
+    // Update bill summary
+    const titleSpan = document.getElementById('paymentBillTitle');
+    const amountSpan = document.getElementById('paymentBillAmount');
+    const btnAmountSpan = document.getElementById('paymentBtnAmount');
+    const qrImg = document.getElementById('paymentUpiQr');
+
+    if (titleSpan) titleSpan.textContent = title || 'Medical Service Fee';
+    if (amountSpan) amountSpan.textContent = '₹' + amount;
+    if (btnAmountSpan) btnAmountSpan.textContent = '₹' + amount;
+
+    // Generate dynamic QR Code for UPI
+    if (qrImg) {
+        const upiUri = `upi://pay?pa=carepulse.billing@okhdfcbank&pn=CarePulse%20Hospital&am=${encodeURIComponent(amount)}&cu=INR&tn=Invoice-${id}`;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUri)}`;
+    }
+
+    // Default to UPI tab
+    selectPaymentChannel('upi');
+
+    openModal('paymentModal');
+}
+
+function selectPaymentChannel(channel) {
+    // Buttons
+    document.querySelectorAll('.payment-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-channel') === channel);
+    });
+
+    // Panes
+    document.querySelectorAll('.payment-channel-pane').forEach(pane => {
+        pane.classList.toggle('active', pane.getAttribute('id') === `channel-${channel}`);
+    });
+
+    // Hidden input
+    const methodInput = document.getElementById('paymentMethodInput');
+    if (methodInput) {
+        methodInput.value = channel.toUpperCase();
+    }
+}
+
+function copyText(text, btnElement) {
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = btnElement.textContent;
+        btnElement.textContent = '✓ Copied!';
+        setTimeout(() => {
+            btnElement.textContent = originalText;
+        }, 1500);
+    }).catch(() => {
+        alert('Copied to clipboard: ' + text);
+    });
+}
+

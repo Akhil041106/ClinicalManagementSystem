@@ -153,10 +153,13 @@ public class AdminController {
     }
 
     @PostMapping("/testreport/{id}/pay")
-    public String payTestReport(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public String payTestReport(@PathVariable("id") Long id,
+                                @RequestParam(value = "paymentMethod", defaultValue = "UPI") String paymentMethod,
+                                @RequestParam(value = "transactionReference", required = false) String transactionReference,
+                                RedirectAttributes redirectAttributes) {
         try {
-            testReportService.updatePaymentStatus(id, "PAID");
-            redirectAttributes.addFlashAttribute("successMessage", "Payment for Diagnostic Report #" + id + " marked as PAID.");
+            testReportService.updatePaymentStatus(id, "PAID", paymentMethod, transactionReference);
+            redirectAttributes.addFlashAttribute("successMessage", "Payment for Diagnostic Report #" + id + " marked as PAID via " + paymentMethod + ".");
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error updating payment: " + ex.getMessage());
         }

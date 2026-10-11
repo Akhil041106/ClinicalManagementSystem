@@ -4,10 +4,10 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Spring Security](https://img.shields.io/badge/Spring%20Security-6.2-blue.svg)](https://spring.io/projects/spring-security)
 [![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3.1-green.svg)](https://www.thymeleaf.org/)
-[![Database](https://img.shields.io/badge/Database-H2%20In--Memory-yellow.svg)](https://www.h2database.com/)
+[![Database](https://img.shields.io/badge/Database-MySQL%208.0-blue.svg)](https://www.mysql.com/)
 [![Currency](https://img.shields.io/badge/Currency-INR%20(%E2%82%B9)-blueviolet.svg)](#)
 
-A full-stack, enterprise-grade Clinical Management System built with **Spring Boot 3**, **Spring Security 6**, **Spring Data JPA**, **Thymeleaf**, and an in-memory **H2 Database**.
+A full-stack, enterprise-grade Clinical Management System built with **Spring Boot 3**, **Spring Security 6**, **Spring Data JPA**, **Thymeleaf**, and **MySQL 8.0 Database**.
 
 Designed specifically for healthcare management with role-based access, Indian healthcare profiles, Indian Rupee (`₹`) billing, payment tracking, and a diagnostic laboratory test reports module.
 
@@ -52,53 +52,34 @@ Designed specifically for healthcare management with role-based access, Indian h
 
 ```
 ClinicalManagementSystem/
-├── pom.xml                               # Maven project dependencies & build
 ├── .gitignore                            # Git ignore rules for Maven & IDEs
 ├── README.md                             # Repository documentation
 ├── run.bat                               # 1-click Windows desktop launcher
 │
-└── src/main/
-    ├── java/com/example/clinicalmanagement/  # ⚙️ BACKEND
-    │   ├── ClinicalManagementApplication.java# App entry & Indian healthcare data seeder
-    │   │
-    │   ├── config/
-    │   │   └── SecurityConfig.java           # Spring Security 6 role-based protection
-    │   │
-    │   ├── entity/                           # JPA Database Entities
-    │   │   ├── User.java                     # Auth credentials & roles
-    │   │   ├── Doctor.java                   # Physician details & consultation fee (₹)
-    │   │   ├── Patient.java                  # Patient EHR, allergies, emergency contacts
-    │   │   ├── Department.java               # Medical specialty departments
-    │   │   ├── Appointment.java              # Booking schedule, fees (₹), payment status
-    │   │   ├── Consultation.java             # Clinical diagnoses & Rx prescriptions
-    │   │   └── TestReport.java               # Diagnostic lab reports, findings, fees (₹)
-    │   │
-    │   ├── repository/
-    │   │   └── Repositories.java             # Spring Data JPA repository interfaces
-    │   │
-    │   ├── service/
-    │   │   └── Services.java                 # Business operations & transaction services
-    │   │
-    │   └── controller/                       # MVC Web Controllers
-    │       ├── AuthController.java           # Login & self-registration routes
-    │       ├── AdminController.java          # Admin console & lab report endpoints
-    │       ├── DoctorController.java         # Doctor workspace & Rx creation
-    │       ├── PatientController.java        # Patient health portal & fee payment
-    │       └── AppointmentController.java    # Appointment booking & payment actions
-    │
-    └── resources/
-        ├── application.properties            # Server port (8080) & H2 database config
-        │
-        ├── templates/                        # 🎨 FRONTEND (HTML5 / Thymeleaf)
-        │   ├── login.html                    # Unified gateway with 1-click auto-fill
-        │   ├── register.html                 # Patient self-registration
-        │   ├── admin.html                    # Admin management console
-        │   ├── patient.html                  # Patient health portal
-        │   └── doctor.html                   # Doctor consultation portal
-        │
-        └── static/                           # 🎨 FRONTEND ASSETS
-            ├── style.css                     # Responsive CSS3 medical theme & print rules
-            └── script.js                     # Tab switching, modal handlers, print logic
+├── backend/                              # ⚙️ BACKEND (Spring Boot / Java 21)
+│   ├── pom.xml                           # Maven dependencies (MySQL Driver, JPA, Security)
+│   ├── run.bat                           # Backend runner
+│   │
+│   └── src/main/
+│       ├── java/com/example/clinicalmanagement/
+│       │   ├── ClinicalManagementApplication.java # Bootstrap & Data Seeder
+│       │   ├── config/SecurityConfig.java         # Spring Security 6 Role Filter
+│       │   ├── entity/                            # JPA Entities (User, Doctor, Patient, etc.)
+│       │   ├── repository/Repositories.java       # Spring Data JPA Repositories
+│       │   ├── service/Services.java              # Transactional Business Services
+│       │   └── controller/                        # REST & Web MVC Controllers
+│       │
+│       └── resources/
+│           └── application.properties             # MySQL Connection & JPA Settings
+│
+└── frontend/                             # 🎨 FRONTEND (HTML5 / Thymeleaf / CSS3 / JS)
+    ├── login.html                        # Gateway with 1-click auto-fill
+    ├── register.html                     # Patient self-registration
+    ├── admin.html                        # Admin management console
+    ├── patient.html                      # Patient health portal
+    ├── doctor.html                       # Doctor consultation portal
+    ├── style.css                         # Responsive CSS3 medical theme & print styles
+    └── script.js                         # Tab switching, modal handlers, print logic
 ```
 
 ---

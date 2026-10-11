@@ -53,11 +53,13 @@ public class AppointmentController {
 
     @PostMapping("/{id}/pay")
     public String payAppointment(@PathVariable("id") Long appointmentId,
+                                 @RequestParam(value = "paymentMethod", defaultValue = "UPI") String paymentMethod,
+                                 @RequestParam(value = "transactionReference", required = false) String transactionReference,
                                  @RequestHeader(value = "Referer", required = false) String referer,
                                  RedirectAttributes redirectAttributes) {
         try {
-            appointmentService.updatePaymentStatus(appointmentId, "PAID");
-            redirectAttributes.addFlashAttribute("successMessage", "Payment of consultation fee for Appointment #" + appointmentId + " marked as PAID successfully!");
+            appointmentService.updatePaymentStatus(appointmentId, "PAID", paymentMethod, transactionReference);
+            redirectAttributes.addFlashAttribute("successMessage", "Payment of consultation fee for Appointment #" + appointmentId + " marked as PAID via " + paymentMethod + " successfully!");
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to record payment: " + ex.getMessage());
         }

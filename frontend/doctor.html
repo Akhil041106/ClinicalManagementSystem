@@ -74,7 +74,7 @@
                             <td>
                                 <div><strong>₹<span th:text="${appt.feeAmount != null ? appt.feeAmount : doctor.consultationFee}">500.00</span></strong></div>
                                 <span th:class="'badge ' + (${appt.paymentStatus == 'PAID'} ? 'badge-paid' : 'badge-unpaid')"
-                                      th:text="${appt.paymentStatus}">PAID</span>
+                                      th:text="${appt.paymentStatus} + (${appt.paymentMethod != null} ? ' via ' + ${appt.paymentMethod} : '')">PAID</span>
                             </td>
                             <td>
                                 <span th:class="'badge badge-' + ${#strings.toLowerCase(appt.status)}" th:text="${appt.status}">PENDING</span>
