@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY backend/pom.xml ./pom.xml
 COPY backend/src ./src
+COPY backend/settings.xml ./settings.xml
 
-RUN mvn clean package -DskipTests
+RUN mvn -s settings.xml clean package -DskipTests
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
