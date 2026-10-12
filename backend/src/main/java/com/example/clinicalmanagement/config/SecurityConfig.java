@@ -58,10 +58,13 @@ public class SecurityConfig {
                 .frameOptions(frame -> frame.sameOrigin())
             )
             .exceptionHandling(ex -> ex
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.sendRedirect("/login?denied=true");
-                })
-            );
+    .authenticationEntryPoint((request, response, authException) -> {
+        response.sendRedirect("/login");
+    })
+    .accessDeniedHandler((request, response, accessDeniedException) -> {
+        response.sendRedirect("/login?denied=true");
+    })
+);
 
         return http.build();
     }
