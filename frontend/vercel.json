@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "https://clinicalmanagementsystem-backend.onrender.com/$1"
+    }
+  ]
+}
