@@ -1,4 +1,4 @@
-package com.example.clinicalmanagementsystem.controller; // match your own package
+package com.example.clinicalmanagement.controller; // match your own package
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
